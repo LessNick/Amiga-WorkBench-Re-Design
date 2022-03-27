@@ -1,2 +1,0 @@
-echo "Copying devs:system-configuration to DF0:DEVS"
-copy devs:system-configuration df0:devs
