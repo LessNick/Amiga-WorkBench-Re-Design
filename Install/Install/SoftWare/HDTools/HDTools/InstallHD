@@ -1,0 +1,30 @@
+.key ""
+.bra {
+.ket }
+echo "Hard Disk Software Installation"
+assign >NIL: dh0: exists
+if warn
+echo "*NWARNING:  The hard disk cannot be found."
+echo "          Make sure the drive is properly prepped and formatted."
+wait 5
+endcli
+endif
+echo "*NThis will reinstall the system software on your hard disk."
+echo "Files on the hard disk will be overwritten."
+ask "Are you sure you want to continue?"
+if warn
+echo "Setting up RAM disk."
+copy :Copy2WB ram:Copy2WB all quiet
+copy ":(Drive Definitions|HDToolbox|Park)" ram:Copy2WB/System quiet
+echo "Copying Workbench 1.3 to hard disk."
+copy Workbench1.3: to dh0: all quiet
+echo "Copying Extras 1.3 to hard disk."
+copy "Extras 1.3:" to dh0: all quiet
+echo "Setting up icons."
+cd dh0:
+delete devs.info fonts.info
+copy ram:Copy2WB dh0: all quiet
+delete ram:Copy2WB all quiet
+echo "*NSoftware installation is now complete."
+endif
+wait 5

@@ -1,0 +1,103 @@
+Changelog for Redit
+===================
+
+10-MAR-2018: Redit 2.0
+  * added: Search dialog now with result list
+  * added: Search and replace on all open documents
+  * added: Three choice Save all/Save none/Cancel requesters
+  * added: "Save all" and "Save all + quit"
+  * added: mouse wheel support (NewMouse)
+  * improved: less disk changes for floppy disk users
+  * improved: menu strip now with separators
+  * improved: Undo/Redo do now perform better
+  * improved: word selection by double click is now less slobby
+  * changed: ESC is now an alternative quit key
+  * bugfix: window is not blocked on requesters, anymore
+  
+16-JAN-2018: Redit 1.16
+  * bugfix: a multiple line undo was not drawn properly. fixed
+  * bugfix: the displayed amount of occurrences of a find & replace
+    operation was always 0. fixed
+  * improved: Redit is now using INTUITICKS only when required, which
+    decreases the CPU usage with an idle, active window
+  * bugfix: in CLI mode an error code was never returned. fixed
+
+10-FEB-2017: Redit 1.15
+  * bugfix: a BSS hunk was thrashed at startup. fixed
+  * bugfix: possible lock leak. fixed
+  * improved: all string format is now done by exec, decreasing binary size
+
+17-JAN-2017: Redit 1.14
+  * bugfix: new documents could thrash file lock. fixed
+  * improved: library loading is now done by own routines, decreasing 
+    binary size
+  * Stackwarning message removed
+  * Increased stacksize to 16k
+
+13-FEB-2016: Redit 1.13
+  * added: Documents can now be loaded by dropping their Workbench icon
+    inside Redit's main window
+  * bugfix: Redit kept Workbench screen locked during runtime. fixed
+  * bugfix: going back all undo steps could mess up internal data. fixed
+  * improved: undo buffers do now try not to grow larger than 24K
+
+05-FEB-2016: Redit 1.12
+  * added: Undo & Redo
+  * improved: more pleasent inital size and position of file request
+  * improved: loading large directories in 1.3 file request was slow
+  * bugfix: selecting last line with triple mouse click was broken. fixed
+  * bugfix: selecting first word with double mouse click was broken. fixed
+
+28-JAN-2016: Redit 1.11
+  * improved: small distance scrolling is now faster and looks nicer
+  * bugfix: on some machines the menu colors were wrong. fixed
+  * bugfix: random crash due to uninitialized data. fixed
+  * added: Alt+Cursor up/down now scrolls document by one page
+  
+14-JAN-2016: Redit 1.10
+  * bugfix: switching stack crashed on some machines. fixed
+  * bugfix: performance on loading large documents was poor. improved
+  * bugfix: text selection with double and triple clicks was flabby. fixed 
+  
+09-JAN-2016: Redit 1.9
+  * bugfix: removed dependency to mathieeedoubas.library
+  * bugfix: increased stack size to 12288
+  * added: alternative Icons by Colani1200
+
+16-JAN-2014: Redit 1.8
+  * bugfix: Replace all 'a' by 'aa' in a document resulted into an 
+    infinite loop. fixed
+    
+16-JAN-2014: Redit 1.7
+  * added: Search & Replace dialog
+  * improved: Tooltypes are now found if Redit is loaded via path 
+    (requires Kickstart 2.0 and better)
+  * bugfix: crash when started with Workbench screen in the 
+    background. fixed
+  * bugfix: crash when empty file was loaded. fixed
+
+08-JAN-2014: Redit 1.6
+  * bugfix: SaveAs did save the document with the current filename when
+    the SaveAs operation was canceled. fixed
+
+07-JAN-2014: Redit 1.5
+  * bugfix: 1.4 broke project close. fixed 
+
+06-JAN-2014: Redit 1.4
+  * added: documents with unsaved work are now marked with an asterisk in 
+    front of their names
+  * changed: increased size of line/column field in status bar
+  * bugfix: sometimes console.device was closed while main window was 
+    still active. fixed
+  * bugfix: sometimes nonstatic menu items' names pointed to volatile 
+    strings. fixed
+
+05-JAN-2014: Redit 1.3
+  * changed: new documents can now be created by CLI interface
+  * added: tabsize now configurable by tooltype
+  * added: colors now configurable by tooltype
+  * added: status bar to display cursor line and column
+  * added: switching between documents by hotkey
+
+02-JAN-2014: Redit 1.2
+  * first public release

@@ -1,0 +1,277 @@
+Redit
+=====
+
+Redit ist ein schlichter Texteditor für Amiga-Computer, der insbesondere 
+für leistungsarme Rechner geeignet ist: Redit läuft ohne Einschränkungen 
+bereits auf einem minimal ausgestatteten Amiga mit Kickstart 1.2 und einem 
+halben Megabyte RAM. Selbstverständlich kann Redit aber auch auf einem bis 
+an die Zähne aufgerüsteten Amiga als schlanker und schneller Editor 
+verwendet werden.
+
+Weitere Eigenschaften von Redit:
+
+  * vollständige Unterstützung von AmigaOS 1.2 bis 3.9.
+  * keinerlei notwendige Abhängigkeiten zu Systemdateien von Disk: Redit 
+    kann auch ohne gestartete Workbench von einer ansonsten leeren 
+    Diskette verwendet werden.
+  * abgesehen vom verfügbaren Arbeitsspeicher gibt es keine 
+    Einschränkungen bezüglich der maximalen Dokumentengröße und 
+    deren Zeilenlängen.
+  * Unterstützung von Tabulatoren.
+  * Breite der Tabulatoren ist konfigurierbar
+  * mehrere Dokumente können gleichzeitig geöffnet und bearbeitet werden.
+  * brauchbare Arbeitungsgeschwindigkeit bereits auf einfachen 
+    68000er Systemen mit 7MHz.
+  * geringer Speicherverbrauch zur Laufzeit.
+  * Suchen & Ersetzen über alle geöffneten Dokumente
+  * Undo & Redo
+  * Neben den üblichen Blockoperationen zum Editieren bietet Redit 
+    zeitgemäße Funktionen zum Selektieren von Text via Tastatur und Maus.
+  * konfigurierbare Farben
+  * sonstige Vorzüge :-)
+
+
+Installation
+============
+
+Redit besteht aus nur einer einzigen ausführbaren Datei; es ist keinerlei 
+Installation notwendig. Kopieren Sie Redit einfach wohin Sie wollen. Ich 
+empfehle als geeigneten Ort den Utilities-Ordner auf Ihrer Workbench. 
+Dieser liegt üblicherweise im Suchpfad und so kann Redit direkt über den 
+CLI ohne weitere Pfadangaben gestartet werden.
+
+Obwohl Redit ohne zusätzliche Systemdateien von Disk läuft, nutzt es 
+dennoch einige derer Vorzüge falls diese installiert sind. Wenn sie eine 
+minimale Startdiskette mit Redit erstellen wollen empfiehlt es sich, diese 
+Dateien ebenfalls mit auf Diskette zu kopieren:
+
+  * Wenn das clipboard.device vorhanden ist, wird dieses anstatt der 
+    internen Routinen für Blockoperationen genutzt. Dieses ermöglicht das 
+    Kopieren und Einfügen über Programmgrenzen hinweg. 
+    Das clipboard.device liegt in SYS:devs.
+  * Ab Workbench 2.0 kann der System-Filerequester anstatt des eingebauten 
+    verwendet werden. Hierfür ist die asl.library erforderlich welche 
+    in SYS:libs zu finden ist.
+  * Redit liest seine Konfiguration aus den Tooltypes seines eigenen Icons.
+    Dazu wird die icon.library benötigt, welche ebenfalls in SYS:libs zu
+    finden ist. Ohne icon.library werden immer nur die Grundeinstellungen
+    von Redit verwendet.
+
+
+Konfiguration
+=============
+
+Redit kann über die Tooltypes seines Icons konfiguriert werden. 
+Selektieren Sie dazu auf Ihrer Workbench das Redit-Icon mit der linken 
+Maustaste und wählen Sie das Menü "Workbench->Info", bzw. ab Workbench 2.0 
+"Icon->Information" aus. 
+
+In dem Punkt "Tool Types" können Sie folgende Werte konfigurieren:
+
+  * TABSIZE:          Breite der Tabulatoren in Leerzeichen (1 bis 32)
+    Grundeinstellung: TABSIZE=4
+  * COLORA_TEXT:      Farbe des Textes
+    Grundeinstellung: COLORA_TEXT=BLACK
+  * COLORB_TEXT:      Farbe Texthintergrunds
+    Grundeinstellung: COLORB_TEXT=WHITE
+  * COLORA_CURSOR:    Farbe des Buchstabens unter dem Cursor
+    Grundeinstellung: COLORA_CURSOR=BLACK
+  * COLORB_CURSOR:    Farbe des Cursors
+    Grundeinstellung: COLORB_CURSOR=3
+  * COLORA_SELECTED:  Farbe des Textes im selektierten Bereich
+    Grundeinstellung: COLORA_SELECTED=WHITE
+  * COLORB_SELECTED:  Farbe des selektierten Bereichs
+    Grundeinstellung: COLORB_SELECTED=BLACK
+
+Hinweis:
+In den Farbeinstellungen können grundsätzlich die Farbregister direkt als 
+Zahl zwischen 0 und 255 angegeben werden, wobei die tatsächliche maximale 
+Zahl von der Farbtiefe Ihrer Workbench abhängt. Da das Farbschema beim 
+Übergang von Workbench 1.3 zu Workbench 2.0 geändert wurde, gibt es 
+zusätzlich die beiden Synonyme "BLACK" und "WHITE", welche für das 
+schwarze bzw. weiße Farbregister der verwendeten Workbenchversion stehen.
+
+
+Start
+=====
+Redit kann sowohl per Doppelklick über die Workbench als auch über den CLI 
+gestartet werden. Sie können beim Start bereits beliebig viele Dokumente 
+öffnen:
+wenn Sie Redit über den CLI starten hängen Sie dazu den Dateinamen 
+inklusive Pfad als Parameter an. So öffnen Sie beispielsweise die 
+Startup-Sequence und die User-Startup:
+
+  Redit S:Startup-Sequence S:User-Startup
+
+Falls eine Datei nicht existiert wird sie beim ersten Speichern angelegt.
+Wenn der Dateipfad nicht existiert oder die Datei aus anderen Gründen 
+nicht geöffnet werden kann gibt Redit eine entsprechende Fehlermeldung aus 
+und beendet sich mit dem Fehlercode #10. 
+
+Beim Start über die Workbench selektieren Sie zunächst mit der Maus und 
+gedrückter Shift-Taste alle Textdokumente die Sie öffnen wollen und 
+doppelklicken sie dann - ebenfalls mit gedrückter Shift-Taste - das 
+Redit-Icon.
+
+Die geöffneten Dokumente finden Sie nach dem Start im Menü "Documents".
+
+Redit benötigt eine Stackgröße von mindestens 16384 Bytes. Falls Redit 
+versehentlich mit einem zu kleinen Stack gestartet wird, wird auf einen 
+passend großen Stack umgeschaltet.
+
+Beim Start über den CLI vergrößern Sie den Stack vor dem Start von Redit 
+durch die Eingabe von:
+
+  stack 16384
+
+Wenn Sie diese Zeile in die Datei S:Shell-Startup Ihrer Workbench 
+eintragen können Sie sich die Eingabe dieses Kommandos in Zukunft sparen.
+
+Beim Start über die Workbench selektieren Sie das Redit-Icon mit der 
+linken Maustase und wählen dann das Menü "Workbench->Info", bzw. 
+ab Workbench 2.0 "Icon->Information" aus. Dort tragen Sie in das 
+Feld "Stack" den Wert 16384 ein.
+
+Wenn Sie Redit über den CLI gestartet haben können sie es zusätzlich durch 
+CTRL+c oder mittels des break-Befehls beenden. Falls ungesicherte 
+Textänderungen vorliegen, werden Sie selbstverständlich gefragt, ob Sie 
+diese verwerfen möchten.
+
+
+Tastatursteuerung des Editors
+=============================
+
+  * Cursortasten (natürlich)
+  * CTRL+Cursor-Rechts / CTRL+Cursor-Links: Springen zum nächsten, bzw. 
+    vorigem Wortanfang.
+  * CTRL+Cursor-Hoch / CTRL+Cursor-Runter: Vertikales Scrollen des Textes 
+    ohne die Cursor-Position zu verändern.
+  * ALT+Cursor-Hoch / ALT+Cursor-Runter: Seitenweises vertikales Scrollen
+    des Textes.
+  * Shift+Cursortasten: Selektieren des Textes unter dem Cursor, bzw. der 
+    gesamten Zeilen.
+  * A+x: Ausschneiden des selektierten Textes in die Zwischenablage.
+  * A+c: Kopieren des selektierten Textes in die Zwischenablage.
+  * A+v: Einfügen der Zwischenablage an der aktuellen Cursorposition, bzw. 
+    Ersetzen des selektierten Textes durch diese.
+  * A+a: Selektieren des gesamten Textes des aktiven Dokuments.
+
+
+Maussteuerung des Editors
+=========================
+
+  * Klick mit der linken Maustaste: Setzen des Cursors.
+  * Doppelklick: Selektieren des Wortes unter dem Mauspfeil.
+  * Dreifachklick: Selektieren der gesamten Zeile unter dem Mauspfeil.
+  * Mit gedrückter linker Maustaste kann der selektierte Bereich mit der 
+    Maus gezogen werden. Falls Sie den Mauszeiger über die Fenstergrenzen 
+    hinaus bewegen, wird das Dokument entsprechend nach oben bzw. nach 
+    unten gescrollt.
+  * Ab Workbench 2.0 können Sie außerdem Dokumente öffnen, indem Sie deren
+    Ikons von der Workbench über dem Editorfenster fallenlassen.
+
+
+Menü
+====
+
+Das Menü erreichen Sie wie auf dem Amiga üblich mit gedrückter 
+rechter Maustaste.
+
+  * Project
+    * New (A+n)
+      ein neues unbenanntes Dokument wird erzeugt.
+    * Open... (A+o)
+      Laden eines Dokuments von Disk. Hierzu wird ein Filerequester 
+      geöffnet.
+    * Save (A+s)
+      Speichern des aktiven Dokumentes. Falls das Dokument noch keinen 
+      Dateinamen hat, werden Sie per Filerequester aufgefordert einen 
+      Speicherort und Dateinamen zu wählen.
+    * Save as...
+      Öffnen eines Filerequesters um das aktive Dokument unter einem 
+      anderen Namen oder an einem anderen Ort zu speichern. Nach 
+      erfolgreichem Speichern ersetzt der neue Dateiname den Alten.
+    * Save all
+      Speichern aller geöffneten und modifizierten Dokumente. Für
+      Dokumente ohne Dateinamen werden Sie per Filerequester aufgefordert
+      einen Speicherort und Dateinamen zu wählen.
+    * Close (A+k)
+      Das aktive Dokument wird geschlossen. Falls in diesem ungesicherte 
+      Änderungen vorgenommen wurden, werden sie gefragt, ob Sie diese 
+      verwerfen möchten.
+    * About...
+      Anzeige der Programmversion.
+    * Save all and quit (A+Shift+q)
+      Es werden alle geöffneten und modifizierten Dokumente gespeichert,
+      bevor Redit beendet wird.
+    * Quit (A+q)
+      Beenden von Redit. Falls in einem geöffneten Dokument noch 
+      ungesicherte Änderungen vorliegen, werden Sie gefragt, ob Sie diese 
+      verwerfen möchten.
+
+  * Edit
+    * Undo (A+u)
+      Die letzte Operation welche das aktive Dokument geändert hat wird 
+      zurückgenommen.
+    * Redo (A+z)
+      Das letzte Undo wird zurückgenommen.
+    * Cut (A+x)
+      Der selektierte Textes wird aus dem aktiven Dokument ausgeschnitten 
+      und in die Zwischenablage kopiert.
+    * Copy (A+c)
+      Der selektierte Text wird in die Zwischenablage kopiert.
+    * Paste (A+v)
+      Der Inhalt der Zwischenablage wird an der aktuellen Cursorposition 
+      in das Dokument eingefügt. Falls in dem Dokument Text selektiert 
+      ist wird dieser durch den Inhalt der Zwischenablage ersetzt.
+    * Select all (A+a)
+      Der gesamte Text des aktiven Dokumentes wird selektiert.
+    * Find... (A+f)
+      Öffnet, bzw. aktiviert den Suchen & Ersetzen Dialog.
+
+  * Documents
+    * Next (A+>)
+    * Previous (A+<)
+      Mit diesen beiden Punkten können sie sich durch die geöffneten 
+      Dokumente blättern, oder sie wählen aus der Auflistung direkt Ihr 
+      gewünschtes Dokument aus.
+      Dokumente denen ein Sternchen voransteht haben noch ungesicherte 
+      Änderungen.
+
+
+Suchen & Ersetzen
+=================
+
+  "Find what:"     - Nach diesem Text wird gesucht.
+  "Replace with:"  - Dieser Text wird zum Ersetzen verwendet
+  
+  "Find next"    Das nächste Vorkommen des Suchtextes wird gefunden und im
+                 Editorfenster markiert.
+  "Replace"      Die aktuell im Editor markierte Fundstelle wird durch den
+                 Ersetzungstext ersetzt.
+  "Replace next" Das nächste Vorkommen des Suchtextes wird durch den 
+                 Ersetzungstext ersetzt.
+  "Replace all"  Alle Vorkommen des Suchtextes werden durch den 
+                 Ersetzungstext ersetzt. Ist "search all documents" 
+                 aktiviert, so wird er in alles geöffneten 
+                 Dokumenten ersetzt.
+  "Find all"     Alle Vorkommen des Suchtextes werden im Ergebnisfenster 
+                 angezeigt. Ist "search all documents" aktiviert, so werden
+                 die Ergebnisse in allen geöffneten Dokumenten ermittelt.
+                 
+  Im Ergebnisfenster können sie einzelne Suchergebnisse per Doppelklick im
+  Editor angezeigt werden. Ein dreifach-Klick bringt das Editorfenster 
+  nach vorne.
+  
+
+Statusleiste
+============
+
+In der Statusleiste unterhalb des Dokumentes wird die Zeile und Spalte in 
+der sich der Cursor befindet angezeigt.
+
+
+
+Ich wünsche Ihnen viel Spaß mit Redit!
+
+                                 11. März 2018, Kai Scherrer (kai@kaiiv.de)

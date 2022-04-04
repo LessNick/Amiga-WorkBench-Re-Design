@@ -1,0 +1,2 @@
+ecox \(20,0)Set RamDisk Icon                                               
+copy sys:ramdisk.info ram:disk.info

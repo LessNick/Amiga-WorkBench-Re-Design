@@ -1,0 +1,21 @@
+.key ""
+.bra {
+.ket }
+failat 30
+echo "Hard Disk Prep"
+echo "*NThis will low-level format your hard disk."
+echo "The drive will be re-partitioned to the standard configuration."
+echo "This operation can take up to half an hour."
+echo "Any information on the hard disk may be lost!"
+ask "Are you sure you want to continue ?"
+if warn
+:Prod_Prep
+if fail
+echo "*NAttempting to prep the hard disk failed."
+echo "Check your hardware and try again."
+quit
+endif
+echo "*NHard disk prep completed."
+echo "*NReboot the machine and run the FormatHD utility."
+quit
+endif

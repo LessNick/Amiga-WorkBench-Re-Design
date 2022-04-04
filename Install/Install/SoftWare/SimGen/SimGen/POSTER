@@ -1,0 +1,14 @@
+------------------------------------------------
+simgen.zoo     102656  Approx time (min):106 at 300 baud, 26 at 1200 baud
+Contributed by: echidna  Date: Wed Jun  7 05:03:31 1989
+Simulated WorkBench Genlock Hack
+
+SIMGEN:
+   This program will add a 2 or 4 color picture you your
+WorkBench Screen.  If the picture is digitized it will look
+much like a genlock; hence the name SimGen, SIMulated GENlock.
+Give it a try.  It's really rather neat.  It should work with
+any size WorkBench.
+Keywords: $binary backdrop dropcloth genlock hack simgen workbench
+Download count: 15
+------------------------------------------------

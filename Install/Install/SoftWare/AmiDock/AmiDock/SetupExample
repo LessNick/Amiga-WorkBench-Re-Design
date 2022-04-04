@@ -1,0 +1,32 @@
+.K ""
+echo "This script will set up a sample AmiDock environment using the"
+echo "icons supplied in the distribution.  You will probably want to"
+echo "read the directions and do a custom setup on your system.  This"
+echo "example is just so you can get a feel for what AmiDock looks like."
+echo ""
+
+if not EXISTS libs:arp.library
+	echo "No existing library, installing libs:arp.library..."
+	copy arp.library libs:arp.library
+else
+	echo "Examine the version numbers of each library."
+	echo ""
+	version libs:arp.library
+	version /AmiDock/arp.library
+	echo ""
+	ask "Do you wish to overwrite libs:arp.library?"
+	if WARN
+		echo "Updating libs:arp.library..."
+		copy arp.library libs:arp.library
+	endif
+endif
+
+ask "Are you using an interlaced screen?"
+if WARN
+	assign Dock: dock/interlace/maindock
+else
+	assign Dock: dock/non-interlace/maindock
+endif
+
+echo "All Done.  Click close gadget to get rid of window."
+endcli

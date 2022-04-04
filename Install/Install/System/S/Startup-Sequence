@@ -1,0 +1,73 @@
+list >ram:tScript S:Before-WB-Startup nodates quick nohead lformat="execute S:Before-WB-Startup/%S"
+execute ram:tScript
+delete ram:tScript
+
+;Patch system functions
+C:SetPatch >NIL:
+
+Addbuffers DF0: 10
+cd C:
+
+cls
+;           ****************************************************************************
+ecox  \(2,0)                _____     _____                _____        _____   
+ecox  \(3,0)            ___|\\    \\   |\\    \\   _____   ___|\\    \\   ___|\\    \\  
+ecox  \(4,0)           /    /\\    \\  | |    | /    /| |    |\\    \\ |    |\\    \\ 
+ecox  \(5,0)          |    |  |    | \\/     / |    || |    | |    ||    | |    |
+ecox  \(6,0)          |    |__|    | /     /_  \\   \\/ |    |/____/ |    | |    |
+ecox  \(7,0)          |    .--.    ||     // \\  \\   \\ |    |\\    \\ |    | |    |
+ecox  \(8,0)          |    |  |    ||    |/   \\ |    ||    | |    ||    | |    |
+ecox  \(9,0)          |____|  |____||\\ ___/\\   \\|   /||____| |____||____|/____/|
+ecox \(10,0)          |    |  |    || |   | \\______/ ||    | |    ||    /    | |
+ecox \(11,0)          |____|  |____| \\|___|/\\ |    | ||____| |____||____|____|/ 
+ecox \(12,0)            \\(      )/      \\(   \\|____|/   \\(     )/    \\(    )/   
+ecox \(13,0)             '      '        '      )/       '     '      '    '    
+ecox \(14,0)                                    '                               
+ecox \(15,0)             Amiga Workbench Re:Design. version 1.0 Build 220402
+
+resident Sys:C/ecox pure
+
+ecox \(20,0)Move C00000 memory to last in list                              
+Sys:System/FastMemFirst
+
+ecox \(20,0)Bind Drivers                                                    
+BindDrivers
+
+ecox \(20,0)Activate Shell                                                  
+resident CLI L:Shell-Seg SYSTEM pure add
+resident C:Execute pure
+mount newcon:
+failat 11
+
+ecox \(20,0)Aassign Extras                                                  
+assign "Extras 1.3:" Sys:
+
+ecox \(20,0)This lets resident be used for rest of script                   
+run execute S:StartupII
+ecox \(21,0)                                                                
+
+ecox \(20,0)Wait for StartupII to complete                                  
+wait >NIL: 5 mins
+
+ecox \(20,0)Activate the ()/* on keypad                                     
+SYS:System/SetMap usa1
+
+ecox \(20,0)Set path for Workbench                                          
+path Ram: C: Sys:Utilities Sys:System S: Sys:Prefs Sys:Tools add
+
+if exists S:User-Startup
+  ecox \(20,0)Wait for User-Startup to complete
+  execute S:User-Startup
+  ecox \(21,0)                                                              
+endif
+
+ecox \(20,0)Wait for inhibit to end before continuing                       
+LoadWB delay
+
+ecox \(20,0)Wait for After-WB-Startup to complete                            
+list >ram:tScript S:After-WB-Startup nodates quick nohead lformat="execute S:After-WB-Startup/%S"
+execute ram:tScript
+delete ram:tScript
+
+ecox \(20,0)End                                                             
+endcli >NIL:

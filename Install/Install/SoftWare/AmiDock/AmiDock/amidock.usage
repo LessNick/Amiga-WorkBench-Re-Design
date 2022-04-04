@@ -1,0 +1,56 @@
+                        How to use AmiDock
+                        
+There are two ways to use AmiDock:
+
+1)  From the the CLI enter 'amidock' and the prompt and press return.
+    This will cause AmiDock to look in the DOCK: directory that you assigned
+    before you ran AmiDock (usually in the startup-sequence).
+    AmiDock will also use the DOCK: assignment if you ran it from the WorkBench
+    by double clicking on its icon, or under WB2.0, placing it in the WBStartup
+    drawer.
+    
+    The assign DOCK: must be made so that it specifies a directory where a 
+    dock.config file is located and must be done before you run amidock in this
+    way.
+    
+    example: assign DOCK: dh0:dock/interlace/maindock
+    
+    For this example to work a dock.config file must be in the directory
+    'dh0:dock/interlace/maindock'.
+    
+2) The second way to run AmiDock eliminates the need for the Assign DOCK: stuff.
+   All that you need to do is to give the path to the dock.config file as the first
+   argument to AmiDock when you run it from the CLI.  This method only works from
+   a CLI (or shell). It will not work from he WorkBench, to run AmiDock from the
+   WorkBench see #1 above.
+   
+   example: amidock dh0:dock/interlace/maindock
+   
+   Remember a dock.config file must be in the directory dh0:dock/interlace/maindock
+   
+
+NEW for version 1.4:
+When you run AmiDock and it cannot find a dock.config file AmiDock will put up
+a error message stating that it cannot find its dock.config file.  If this happens
+be sure that the dock.config file is in the directory specified as a argument or by
+the assignment DOCK:.
+
+
+To run AmiDock from the startup-sequence add the following lines to your 
+startup-sequence:
+
+assign DOCK: <path to dock.config file - see above>
+amidock
+
+
+To run more than one AmiDock from your startup-sequence add these lines:
+
+assign DOCK: <path to dock.config file - see above>
+amidock
+amidock <path to another dock.config file>
+
+
+You can run as many as you want to like this, just remember that each different
+AmiDock needs its own dock.config file (put them in separate directories) and each
+brush used by a particular dock needs to be located with each and every dock.config
+file that uses it.

@@ -1,0 +1,28 @@
+.key ""
+.bra {
+.ket }
+echo "Hard Disk Format"
+assign >NIL: dh0: exists
+if warn
+echo "*NWARNING:  The hard disk cannot be found!"
+echo "          Make sure the drive is properly connected and prepped."
+wait 5
+endcli
+endif
+echo "*NThis will reformat your hard disk."
+echo "All information on this hard disk will be lost!"
+ask "Are you sure you want to continue?"
+if warn
+:c/path >NIL: dh0: add quiet
+:c/wait 5
+:System/Format <NIL: drive dh0: name Workbench
+IF fail
+echo "Format failed"
+wait 5
+quit
+endif
+echo "*NHard disk format is complete."
+echo "*NThe software will now be installed on your hard disk."
+execute :InstallHD
+endif
+wait 5

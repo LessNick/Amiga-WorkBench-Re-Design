@@ -1,0 +1,337 @@
+(set installSysPath "DH0:")
+(set installWorkPath "Work:")
+
+(set iOptions
+	(askoptions
+		(prompt "Please choose install steps:")
+		(choices
+			" Prepare HardDisk Patitions"
+			" Format DH0:"
+			" Copy files from WorkBench 1.3"
+			" Install New Startup System"
+			" Install Pointer & Color theme"
+			" Install Additional Fonts"
+			" Install Additional Software"
+			" Install Support Locale CP1251"
+			" [MAIN] Install AWRD Icons"
+		)
+		(help
+			"\"Prepare HardDisk Patitions\" - run HDToolbox\n"
+			"\"Format DH0:\" - quick format new created partition\n"
+			"\"Copy WB1.3 Files\" - copy files from WB floppy's\n"
+			"\"Install Pointer\" - replace default pointer and set color theme\n"
+			"\"Install Fonts\" - copy additional fonts\n"
+			"\"Install Additional Software\" - copy some soft\n"
+			"\"Install AWRD Icons\" - install icons (.info files)\n"
+		)
+		;(default 252)
+		(default 64)
+	)
+)
+
+(set isPrepare (BITAND iOptions 1))
+(set isFormat (BITAND iOptions 2))
+(set isCopyWB (BITAND iOptions 4))
+(set isNewStartUp (BITAND iOptions 8))
+(set isInstallCursors (BITAND iOptions 16))
+(set isInstallFonts (BITAND iOptions 32))
+(set isInstallSoft (BITAND iOptions 64))
+(set isInstallLocale (BITAND iOptions 128))
+(set isInstallIcons (BITAND iOptions 256))
+
+
+(if ( = isInstallSoft 64) (
+	(set installWorkPath
+		(askdir
+			(prompt "Select the directory for installing programs:")
+			(help @askdir-help)
+			(default "Work:")
+		)
+	)
+
+	(set iOptions
+		(askoptions
+			(prompt "Please confirm install Additional Software:")
+			(choices
+				" MyMenu"
+				" Zoom"
+				" AmiDock"
+				" HDTools"
+				" DOpus 4"
+				" Redit 2"
+				" SimGen"
+;				" -"
+;				" -"
+			)
+			(help 
+				"\"MyMenu\" - Add items to WorkBench Menu\n"
+				"\"Zoom\" - Add maximize window button\n"
+				"\"AmiDock\" - Add Toolbar with quick links\n"
+				"\"HDTools\" - Tools for HardDisk\n"
+				"\"DOpus 4\" - Directory Opus\n"
+				"\"Redit 2\" - TextEditor\n"
+				"\"SimGen\" - Set WorkBench Background (Wallpapers)\n"
+			)
+			(default (+ 1 2 4 8 16 32 64 128 256))
+		)
+	)
+))
+
+(set installMyMenu (BITAND iOptions 1))
+(set installZoom (BITAND iOptions 2))
+(set installAmiDock (BITAND iOptions 4))
+(set installHDTools (BITAND iOptions 8))
+(set installDopus (BITAND iOptions 16))
+(set installRedit (BITAND iOptions 32))
+(set installSimGen (BITAND iOptions 64))
+
+(if ( = isPrepare 1) (
+	(run "AWRD:HDToolbox"
+		(prompt
+			"\nWARNING !!!\n\n"
+			"Now launch hard disk setup utility.\n\n"
+			"If the disk partitions have already been created, then skip this step."
+		)
+		(help "No help for this.")
+		(confirm)
+	)
+))
+
+(if ( = isFormat 2) (
+	(run "Sys:System/Format DRIVE DH0: NAME System QUICK"
+		(prompt
+			"\nWARNING !!!\n\n"
+			"Now launch format hard disk DH0:.\n\n"
+			"If the disk already been formated, then skip this step."
+		)
+		(help "No help for this function")
+		(confirm)
+	)
+))
+
+(run (cat installSysPath "C/DiskChange " installSysPath))
+
+(if ( = isCopyWB 4) (
+	(copyfiles
+		(source "WorkBench1.3:")
+		(dest installSysPath)
+		(all)
+	)
+	(delete (cat installSysPath "Empty"))
+	(delete (cat installSysPath "Empty.info"))
+
+	(set demosPath (cat installSysPath "Demos"))
+	(makedir demosPath)
+	
+	(copyfiles
+		(source installSysPath)
+		(dest demosPath)
+		(files)
+		(pattern "Boing(.samples|%)")
+	)
+
+	(delete (cat installSysPath "Boing"))
+	(delete (cat installSysPath "Boing.info"))
+	(delete (cat installSysPath "Boing.samples"))
+
+	(copyfiles
+		(source "Extras 1.3:")
+		(dest installSysPath)
+		(all)
+	)
+
+	(run (cat "delete " installSysPath "PCUtil/#?"))
+	(delete (cat installSysPath "PCUtil"))
+	(delete (cat installSysPath "PCUtil.info"))
+))
+
+(if ( = isNewStartUp 8) (
+	;(if (exists (cat installSysPath "S/Before-WB-Startup")) (run (cat "copy " installSysPath "S/Before-WB-Startup " installSysPath "S/Before-WB-Startup.bak")))
+	;(if (exists (cat installSysPath "S/After-WB-Startup")) (run (cat "copy " installSysPath "S/After-WB-Startup " installSysPath "S/After-WB-Startup.bak")))
+
+	(if (exists (cat installSysPath "S/Cli-Startup")) (run (cat "copy " installSysPath "S/Cli-Startup " installSysPath "S/Cli-Startup.bak")))
+	(if (exists (cat installSysPath "S/Shell-Startup")) (run (cat "copy " installSysPath "S/Shell-Startup " installSysPath "S/Shell-Startup.bak")))
+	(if (exists (cat installSysPath "S/Startup-Sequence")) (run (cat "copy " installSysPath "S/Startup-Sequence " installSysPath "S/Startup-Sequence.bak")))
+	(if (exists (cat installSysPath "S/User-Startup")) (run (cat "copy " installSysPath "S/User-Startup " installSysPath "S/User-Startup.bak")))
+
+	(copyfiles
+		(source "AWRD:/Install/System/S")
+		(dest (cat installSysPath "S"))
+		(all)
+	)
+))
+
+(if ( = isInstallCursors 16) (
+	(copyfiles
+		(source "AWRD:/Install/System/Devs")
+		(dest (cat installSysPath "Devs"))
+		(all)
+	)
+))
+
+(if ( = isInstallFonts 32) (
+	(copyfiles
+		(source "AWRD:/Install/System/Fonts/")
+		(dest (cat installSysPath "Fonts"))
+		(all)
+	)
+))
+
+(if ( = isInstallSoft 64) (
+	(if (= installWorkPath "Work:")
+		(copyfiles
+			(source "AWRD:/Install/Software/")
+			(dest installWorkPath)
+			(files)
+			(pattern "Disk.info")
+		)
+		(run (cat installSysPath "C/DiskChange Work:"))
+	)
+
+
+	(if ( = installMyMenu 1) (
+		(copyfiles
+			(source "AWRD:/Install/Software/MyMenu/")
+			(dest installWorkPath)
+			(all)
+		)
+
+		(textfile
+			(prompt "Appending User-Startup...")
+			(help "No help for this.")
+			(dest (cat installSysPath "S/After-WB-Startup/MyMenu"))
+			(append 
+				(cat "cd " installWorkPath "MyMenu\n" "MyMenu >NIL:\n")
+			)
+		)
+	))
+
+	(if ( = installZoom 2) (
+		(copyfiles
+			(source "AWRD:/Install/Software/Zoom/")
+			(dest installSysPath)
+			(all)
+		)
+	))
+
+	(if ( = installAmiDock 4) (
+		(copyfiles
+			(source "AWRD:/Install/Software/AmiDock/")
+			(dest installWorkPath)
+			(all)
+		)
+
+		(run (cat "copy AWRD:/Install/Software/AmiDock/AmiDock/arp.library " installSysPath "Libs/"))
+
+		(textfile
+			(prompt "Appending User-Startup...")
+			(help "No help for this.")
+			(dest (cat installSysPath "S/After-WB-Startup/AmiDock"))
+			(append (cat
+				"assign Dock: " installWorkPath "AmiDock/dock/AWRD\n"
+				installWorkPath "AmiDock/AmiDock >NIL:\n"
+			))
+		)
+
+	))
+
+	(if ( = installHDTools 8) (
+		(copyfiles
+			(source "AWRD:/Install/Software/HDTools/")
+			(dest installWorkPath)
+			(all)
+		)
+	))
+
+	(if ( = installDopus 16) (
+		(copyfiles
+			(source "AWRD:/Install/Software/DOpus/")
+			(dest installWorkPath)
+			(all)
+		)
+
+		(textfile
+			(prompt "Appending User-Startup...")
+			(help "No help for this.")
+			(dest (cat installSysPath "S/After-WB-Startup/Dopus"))
+			(append (cat "assign Dopus: " installWorkPath "Dopus\n"))
+		)
+		
+	))
+
+	(if ( = installRedit 32) (
+		(copyfiles
+			(source "AWRD:/Install/Software/Redit2/")
+			(dest installWorkPath)
+			(all)
+		)
+	))
+
+	(if ( = installSimGen 64) (
+		(copyfiles
+			(source "AWRD:/Install/Software/SimGen/")
+			(dest installWorkPath)
+			(all)
+		)
+
+		(textfile
+			(prompt "Appending User-Startup...")
+			(help "No help for this.")
+			(dest (cat installSysPath "S/After-WB-Startup/SimGen"))
+			(append (cat "runback " installWorkPath "SimGen/SimGen " installWorkPath "SimGen/Wallpapers/cirno.iff\n"))
+		)
+	))
+))
+
+(if ( = isInstallLocale 128) (
+	(copyfiles
+		(source "AWRD:/Install/Locale/")
+		(dest installSysPath)
+		(all)
+	)
+
+))
+
+(if ( = isInstallIcons 256) (
+	(copyfiles
+		(source "AWRD:/Install/Icons/")
+		(dest installSysPath)
+		(all)
+	)
+
+	(textfile
+		(prompt "Appending User-Startup...")
+		(help "No help for this.")
+		(dest (cat installSysPath "S/User-Startup"))
+		(include "AWRD:/Install/Icons-Startup")
+	)
+))
+
+(set #srcPath "AWRD:/Install/System/C")
+(set #dstPath (cat installSysPath "C"))
+
+(copyfiles
+	(source #srcPath)
+	(dest #dstPath)
+	(all)
+)
+
+(run (cat "list >ram:tScript " #dstPath " nodates quick nohead lformat=\"protect " #dstPath "/%S +p\""))
+(run "execute ram:tScript")
+(delete "ram:tScript")
+
+(if	(askbool
+		(prompt
+			"Instalation of AWRD has finished.\n\n"
+			"Press \"Reset\" to reset your amiga\n"
+			"or \"Finish\" to exit installation.\n\n")
+
+			"Don't forget remove any WorkBench\nfloppy disks after restart.\n"
+
+		(choices "Reset" "Finish")
+		(help "Pretty please...")
+	)
+	(run (cat installSysPath "C/Reset"))
+)
+
+(exit "" (quiet))

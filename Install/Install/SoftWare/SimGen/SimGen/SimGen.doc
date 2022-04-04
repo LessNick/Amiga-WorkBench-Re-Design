@@ -1,0 +1,469 @@
+
+                          SimGen
+
+                     by Gregg Tavares
+
+                      © 1989 Echidna
+
+                      BIX:   echidna
+                      PLINK: GreggT
+                      CIS:   72411,2772
+
+
+-=> Try this <=-
+
+CD to the directory where you unZOOed these files and
+type.
+
+run SimGen MCastle.200x4
+
+Now run some other programs that use the WorkBench for
+their displays.  Pretty neat, ay?
+
+
+-=> SimGen, What does it do? <=-
+
+Well, SimGen displays a 2 or 4 color IFF picture "behind"
+your WorkBench.  If the IFF picture is a digitized picture
+it looks much like a GenLocked Display; hence the name
+SIMGEN for 'SIMulated GENlock'.
+
+
+-=> How does SimGen work? <=-
+
+SimGen Adds 1 or 2 bitplanes to your WorkBench Screen and
+loads the specified picture into these bitplanes.  Then it
+sets the colors for the desired effect.
+
+Example SimGen color registers for a 4 color picture:
+
+   Color 0  = Color 0 from PICTURE.
+   Color 1  = Color 1 from WorkBench.
+   Color 2  = Color 2 from WorkBench.
+   Color 3  = Color 3 from WorkBench.
+   Color 4  = Color 1 from PICTURE.
+   Color 5  = Color 1 from WorkBench.
+   Color 6  = Color 2 from WorkBench.
+   Color 7  = Color 3 from WorkBench.
+   Color 8  = Color 2 from PICTURE.
+   Color 9  = Color 1 from WorkBench.
+   Color 10 = Color 2 from WorkBench.
+   Color 11 = Color 3 from WorkBench.
+   Color 12 = Color 3 from PICTURE.
+   Color 13 = Color 1 from WorkBench.
+   Color 14 = Color 2 from WorkBench.
+   Color 15 = Color 3 from WorkBench.
+
+To those that don't care how it works, just suffice it to
+say that it looks real neat!
+
+
+-=> Are there any negative side effects? <=-
+
+Yes.
+
+1) SimGen takes about 25K to run and another 16K to 64K
+   for the picture it loads.  If you load a 2 color
+   picture on a 640x200 WorkBench the picture will take
+   16K.
+
+WorkBench Size | Colors In Picture | Memory
+---------------+-------------------+-----------
+   640x200     |        2          |   16K
+   640x200     |        4          |   32K
+   640x400     |        2          |   32K
+   640x400     |        4          |   64K
+   708x480     |        4          |   85K
+
+
+-=> What will SimGen Work With? <=-
+
+SimGen should work with any size WorkBench Screen.  It most
+likely will not work with other WorkBench Hacks like
+DropCloth or DropShadow nor will it work with 8 and 16
+color WorkBenchs.  It will work with Interlaced,
+Non-Interlaced and Overscan WorkBenchs (MoreRows).
+
+Adding more colors to your WorkBench also slows it down. 
+This is because the electronics in your Amiga that display
+graphics and your Amiga's CPU or 68000 microprocessor can't
+both read your computers memory at the same time.  Much of
+the time this is not a problem.  The memory in your Amiga
+can only be read about 14 million times a second (I Think).
+The 68000 can normally only use the memory every other one
+of those times or 7 million times a second.  The creators
+of the Amiga designed it so that the display electronics
+(and other electronics for sound and disk support) read the
+memory the rest of the time and so everything runs smooth,
+but, when you have a screen that is HIRES (640 or more
+pixels across) and more than 4 colors, the display
+electronic have to read lots of memory to display your
+graphics, more memory than they can read with their 7
+million opportunities each second and so they use some of
+the 68000's opportunities which means your 68000 can't use
+the memory as often as usual which in turn means your Amiga
+will run a little slower.  (Other modes like
+Hold-And-Modify "HAM" and Extra-Halfbrite have the same
+effect.)
+  I haven't noticed SimGen slowing my Amiga down to much. 
+Certainly not as much as DropCloth, DropShadow, or an 8 or
+16 color WorkBench.  This is because all of those programs
+either actually draw on your WorkBench screen everytime you
+move a Window or they tell the WorkBench it has more colors
+and therefore the WorkBench must draw all its windows and
+graphics in 8 or 16 colors instead of 4 which requires more
+work and takes more time.
+  SimGen adds colors to the WorkBench's display but it
+doesn't need to tell WorkBench about it so WorkBench still
+thinks it is only using 4 colors and therefore performs
+better.
+
+
+-=> How do I run it? <=-
+
+SimGen may be run from the CLI or the WorkBench.
+
+From the WorkBench, just single-click on any IFF Picture
+Icon, hold the shift button and double-click on the SimGen
+Icon.  (See picture requirements and suggestions below.)
+
+You may also edit your Pictures' icons to run SimGen
+directly.  To do this, single-click on your chosen IFF
+Picture Icon and then choose "Info" from the "WorkBench"
+menu.  When the "Info" Window appears, click in the
+"Default Tool" box and change it from whatever it is to
+the path where you keep SimGen.  If you put SimGen in
+your C: directory then you would set the "Default Tool"
+to 'C:SimGen'.  If you keep SimGen in on a Disk named
+"Hacks" you might set the "Default Tool" to
+'Hacks:SimGen'.
+
+To "Remove" SimGen, from the WorkBench, Double-Click on the
+SimGen Icon.  A Small Help window should appear with the
+option to "Remove".  Click on it and SimGen will remove
+itself from your System.
+
+From the CLI you would type SimGen [picture] where
+[picture] is the path and name of the picture you want to
+load.  If the picture you want to load is called
+'RayTrace' and is on a disk in drive DF1: you would type
+
+  SimGen DF1:RayTrace.
+
+The problem with this is that you won't get your CLI
+back.  To get your CLI back make sure your CLI window is
+the active window and press CTRL-C.  (That's both the key
+labeled 'CTRL' on the left side of your keyboard and the
+'C' key at the same time)  It is more likely you do not
+wish to tie up your CLI so you would usually type
+something like.
+
+  run SimGen DF1:RayTrace
+
+or
+
+  runback SimGen DF1:RayTrace
+
+When you do this you will not be able to use CTRL-C to
+remove SimGen.  To remove SimGen you may type
+
+  SimGen -r
+
+'-r' is for Remove.  Or you may send a CTRL-C to SimGen. 
+To do this type
+
+  Status
+
+You will see something like this.
+
+  Process  1: Loaded as command: status
+  Process  2: Loaded as command: SimGen
+
+Notice that it says Process 2 is SimGen.  Now to send a
+CTRL-C to process 2 type
+
+  Break 2
+
+SimGen should exit Immediatly.
+
+You don't need to "Remove" SimGen before you re-run it
+with another picture.  SimGen will remove the any
+previously loaded picture automatically.
+
+
+-=> How does SimGen handle IFF Pictures? <=-
+
+SimGen will load any IFF picture but it will only use at
+most the first 2 bitplanes (although it will load all the
+bitplanes of the picture.)  This means you would probably
+only want to use 2 or 4 color pictures.  SimGen will also
+only use as much of the picture as it can fit on the
+WorkBench Screen.  If the picture you load is bigger than
+the current WorkBench screen it will be centered and the
+edges chopped off.  If the picture you load is smaller, by
+default it will be centered in the middle of the screen.
+  There is an option to 'Tile' a small picture.  This
+option uses a small picture or brush as a 'pattern'.  If
+the brush you are using is called 'rods' and is in the
+current directory and you want to 'Tile' it you would
+type something like.
+
+    run SimGen -t rods
+
+This will start the 'Tiling' from the Top, Left corner of
+the screen.  Sometimes this is not desirable so you may
+give the picture an offset.  Typing
+
+    run SimGen -t10,20 rods
+
+will start the 'Tiling' 10 pixels from the left of the
+screen and 20 pixels from the top.
+
+From the WorkBench you make select 'Tiling' by adding the
+line 'TILE' in your picture's 'Tool Types'.  (See Below
+for how to edit 'Tool Types'.)  You may set the tiling
+offset by specifing it after the word 'TILE' as in
+'TILE=10,20' (Note: TILE must be all capital letters, the
+equal sign '=' is NOT optional, and you shouldn't have any
+spaces around the numbers.)
+
+
+-=> What other options does SimGen have? <=-
+
+From the CLI       '-w'
+From the WorkBench 'WORKBENCH'
+
+This option is supposed to keep SimGen around even after
+some other program has closed the WorkBench and the
+Re-Opened it.  I wasn't sure of a safe way to do this yet
+so it is NOT IMPLEMENTED.
+
+From the CLI       '-k'
+From the WorkBench 'KEEPCOLORS'
+
+This option is supposed to keep the colors correct even
+after some other program has changed them (like
+Preferences).  The colors are currently only set once when
+you first run the program as I couldn't think of a way to
+do this safely (yet.).  If you change your WorkBench colors
+while SimGen is running it would probably be best to re-run
+SimGen.
+
+From the CLI        '-p<PickFile>'
+Not Available from the WorkBench
+
+This option allows you to create a text file that lists all
+the pictures you might like to use with SimGen.  SimGen
+will the look at that file and pick one picture at random. 
+The first line of the file should contain the number of
+choices SimGen has to pick from.  The rest of the lines
+should contain the choices in the form of Double-Quoted
+filenames. An Example PickFile might look like this.
+
+3
+"Pictures:Bozo"
+"Pictures:RayTrace"
+"Pictures:Rods"t10,20
+
+Notice the last line contains the 'Tiling option'. If you
+want picture tiled you must put a 't' immediatly after
+the closing double-quote followed by optional offset
+information.  If you save this PickFile as 'PictureList'
+in the current directory you would use it by typing
+
+   run SimGen -pPictureList
+
+You would most likely use this option in your
+startup-sequence if you are lucky enough to have a Hard
+Drive and you want SimGen to pick a picture at random
+everytime you turn on/reboot your Amiga.
+  If the list of pictures is short you may specify them
+on the command line as in
+
+    run SimGen Pictures:Bozo Picture:RayTrace.
+
+Note: You can't specify separate Tiling options for each
+picture from the command line.
+
+
+-=> How to Set Tool Types. <=-
+
+Setting 'Tool Types' of a picture is much like setting the
+'Default Tool' of a picture.  First, single-click on your
+chosen picture.  Then choose "Info" from the "WorkBench"
+menu.  When the "Info" Window appears, click on the "ADD"
+button in the 'Tool Types' area.  This will add another
+'Tool Type'.  Type the option you wish to add and press
+RETURN.  Now click 'SAVE' on the lower left area of the
+"Info" Window.  (For more information on Editing 'Tool
+Types' see your Amiga User's Guide).  Note: The Info
+Window's 'Tool Types' edit options are buggy and will
+sometime mess up your 'Tool Types.'  If you set your 'Tool
+Types' and then Click on the Picture Icon and the option
+you set doesn't work.  Check to see (by bringing up the
+"Info" window again) that the "Info" window correctly saved
+your 'Tool Types.'
+
+
+-=> Requirements and Suggestions for Pictures <=-
+
+Most of the picture included with SimGen were pictures
+found on local BBSes and from Users Group that we ran
+through the Digi-View 3.0 software.  You can by this
+software for as little as $15 at your local Amiga
+Dealer/Mail Order House.  This software is an invaluable
+tool for image processing (without buying the actual
+Digi-View Digitizer that the software was written for).  It
+will allow you to choose a display mode and a number of
+colors and then will load any IFF picture and 'massage' the
+picture into the requested mode with dithering and all. 
+This is much more than Pixmate or Butcher will do in this
+particular area.
+  We chose HIRES (YES) / INTERLACE (NO) when entering
+Digi-View 3.0.  If you are making SimGen pictures for an
+Interlaced WorkBench then Choose INTERLACE (YES).  Now,
+click " OK " after getting the "No Video Signal Present"
+message.   Go to the menus and from the "Controls" menu
+choose "Palette".  Now set the colors to 4 then chose "OK".
+Now Load any IFF Picture.  It will take a while to load
+because Digi-View is expanding the picture into it's own
+internal format so that it can munipulate it better.  Once
+it is done loading, it will draw the picture in 4 colors.
+  There are many options in Digi-View that will help you
+get the best results.  Here are a few of tips.
+  1) Since we told Digi-View it could only use 4 colors
+it has to pick 4 colors to use.  Usually it picks the 4
+most common colors in the picture.  If you have a picture
+of a brown tree with green leaves but most of the picture
+is dithered shades of blue sky, Digi-View might pick four
+shades of blue which means the tree and its leaves will be
+drawn in dithered shades of blue.  This is not always what
+you want.  Fortunately Digi-View will let you choose the
+colors it should use.  Bring up the Palette Requester by
+choosing "Palette" from the "Controls" menu.  Now set one
+of the blues, in the first four colors (the ones against
+the left side of the screen.) to a shade of green similar
+to the green of the leaves.  Set another one of the blues
+to a shade of brown similar to the shade of the tree.  Then
+choose "Freeze Palette".  This will force Digi-View to use
+those colors.  Click on "Display" and Digi-View will
+re-draw your picture with the new colors.  (NOTE 1:
+Whenever you want Digi-View to re-draw the picture you must
+choose "Display" either from a button or from the Menus. 
+Choosing "OK" will not work.  NOTE 2: If you load another
+picture, you should first choose "Make New Palette" from
+the "Palette Requester" or Digi-View will be forced to draw
+the new picture with the old pictures colors.)
+  2) Once you have a good looking picture it is best to
+dim the colors.  You can use Digi-View's "Palette
+Requester" for this, or some other program.  (Programs like
+Colors (From Deluxe PhotoLab), PixMate and Butcher are
+great for dimming all the colors.)  The Standard white
+letters of the WorkBench show up well against dim/dark
+colors.  Also note that alot of black in your SimGen
+pictures is usually not a good choice because black is
+often a standard WorkBench color and so black objects on
+the WorkBench won't show up well against a largely black
+SimGen picture.
+  3) For Digitized pictures it is very easy to get decent
+results by first telling Digi-View to draw the picture in
+black and white and then changing the black and white
+colors to other hues using Digi-View or some other program.
+
+
+-=> Notes for Other programmers. <=-
+
+SimGen adds bitplanes to the WorkBench by first getting
+the Address of the WorkBench Screen though the SimGen
+Credits Window.  Then, from the WorkBench Screen it makes
+a copy of its ViewPort's RasInfo's BitMap.  It adds the
+new bitplanes to this copy, points the RasInfo to the copy
+bitmap and then calls RemakeDisplay ().  When exiting it
+points the RasInfo back to it's original bitmap and again
+calls RemakeDisplay ().  If there is any reason you know
+this won't work AND you know a fix for it I would like to
+hear of it.
+
+The reason the WORKBENCH and KEEPCOLOR options are not
+implemented is that I could not think of any reasonable way
+to do it.  I thought I could SetFunction, LoadRGB4, SetRGB4
+and OpenWorkBench, but when the WorkBench re-opens I don't
+know how to get its address except to open a window on it
+(which I obviously can't do inside these patches.)  If you
+have any ideas, I'd be happy to hear them.
+
+
+-=> Where did I get the idea for SimGen <=-
+
+Well, I was at one of my local computer stores and I
+noticed one of the Amigas there had what I thought was a
+DropCloth Picture.  As I used the machine I noticed that
+is was more than a DropCloth.  The picture showed through
+all the windows including the TxEd window I was using to
+edit a script.  It looked pretty cool so I looked at their
+startup-sequence, found out what it ran to add the picture
+to the WorkBench and made a copy of it along with some of
+the pictures they used with it.  The program was called
+"Tapestry" written by Joe Hitchens.  I took it home and
+decided to show it to my roommates, but the pictures I had
+copied were all 640x400x1 or bigger (used on an Interlaced
+WorkBench.)  I don't use an Interlaced WorkBench so I set
+out to make some 640x200x1 pictures for my WorkBench to
+show off this new program.  Well, as I was creating
+pictures in Digi-View I accidently made a 4 color picture
+instead of a 2 color.  I looked at it and thought "WOW!
+That's really good for 2 colors."  Then I noticed it was 4
+colors.  I thought about it for a moment and knew it
+should be trivial to support 4 colors instead of 2 and I
+thought maybe "Tapestry" might already support 4 colors so
+I tried the 4 color picture.  Nope, "Tapestry" only
+displayed 1 bitplane of my picture. So, I thought, maybe
+there's a newer version on the 'boards'.  I called
+Compuserve. Nothing.  I called PeopleLink and found
+"Tapestry" and "Tapestry Version 2."  The small online
+description said it supported 4 colors.  So, I downloaded
+it and tried it out.  No luck!  The documentation said
+that 4 colors as well as tiling/pattern were to be added
+to a future version.  The doumentation was dated March 18,
+1989.  It shouldn't take more than 38 seconds to add 4
+color support I thought, so I decided that since it was
+now June 4, 1989, 38 seconds had long passed since the
+last version of "Tapestry", and, given this, the author
+must have died or something.  So, instead of waiting for
+who knows how many more months for a 4 color version I
+decided to write my own.
+  "Tapestry" version 2 was only 11.3K big.  SimGen is
+22.8.   Sorry about the size increase.  It is mostly
+because my IFF routines are the Electronic Arts/Commodore
+Amiga IFF routines heavily modified for extra
+functionality but not code size.
+  The IFF routines will load any type of IFF ILBM file
+including color cycling info, and ViewMode.  They will
+read any part of a picture to any part of a bitmap or
+rastport and will create the bitmap and rastport if
+necessary.  They will also clip to a bitmap/rastport that
+is smaller then the picture.  When is Commodore Amiga
+going to supply OS level IFF support since 50% or more of
+all Amiga programs could benefit from it!  I've been
+thinking about turning my IFF routines into a sharable
+library, they would be large but they would work and they
+do an awful lot of work.  As a sharable library they could
+also be updated with smaller and faster versions.
+  The other things that added size to SimGen are,
+WorkBench Support , Tiling and WorkBench Help.  The Help
+routines I've had for a while.  I wish Commodore Amiga
+would add similar routines to the Amiga OS so I wouldn't
+have to add them to every program I write. 
+(AutoRequesters are too ugly and not as functional IMHO.)
+
+
+ -=> Distrubution <=-
+
+This program may be distrubuted as long as it is done so
+free of charge and all the files in the ZOO are kept
+together.  It may be placed on BBSes and in PD Disk
+Collections.  It is in other words, copywritten but Freely
+ReDistribuatable.
+
+Have fun with it.  I wasted two nights writing it. :-)
+

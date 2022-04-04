@@ -1,0 +1,250 @@
+                                  AmiDock
+
+                                version 1.3
+
+                                  03/10/91
+
+                               by Gary Knight
+
+
+  What is AmiDock?  For those of you familar with the NeXT computer this 
+will be a short explanation. AmiDock is an Amiga version of the NeXT's Dock.
+AmiDock is (of course) more versatile and  not as limited as it's NeXT cousin. 
+
+  OK, now for those of you not familar with the NeXT computer. AmiDock
+will provide you with a number of buttons on the WorkBench screen that when 
+pressed will launch other programs. These buttons are fully configurable to run 
+any program you want with a single press.
+
+  Here a a brief run down of the features of AmiDock:
+
+	* AmiDock can run programs that need a CLI or the WorkBench.
+
+	* AmiDock uses IFF brushes for the button imagery. The brushes used are
+	  standard IFF files and can be customized to your individual wants and
+	  desires. In fact many of the programs you will add to the dock will need a
+	  brush created for them. I have included a Dock Image Grid for this
+	  purpose, but more about that later.
+
+	* AmiDock is compatible with WorkBench 1.2, 1.3, and 2.0 and will run on
+          any Amiga computer with any amount of memory. AmiDock has been tested
+          on all Amiga machines (500/1000/2000/2500/3000).
+
+	* Amidock supports an unlimited number of buttons. The buttons are kept in
+	  a single line (column or row) and can extend beyond the screen boundaries
+	  with the use of the two scroll arrows.
+
+	* AmiDock can be moved around the screen like any normal window, and
+	  can be configured as a vertical column or a horizontal row. 
+
+
+  Ok, now what do you need to get up and running with the program? 
+
+        1) You will need a copy of the arp.library in your LIBS: directory. 
+           This has been included. AmiDock uses the arp.library for it's file
+           requester.
+
+        2) You will need to copy the AmiDock program to your C: directory.
+
+        3) Copy the Dock directory to your hard drive or your WorkBench
+           Boot Floppy. The Dock directory contains the following files and
+           directories:
+
+                     Dock/
+                           Interlace/
+                                      DockImageGrid2.iff
+                                      MainDock/
+                                                <misc brush files>
+                                                dock.config
+                           Non-interlace/
+                                         DockImageGrid1.iff
+                                         MainDock/
+                                                  <misc brush files>
+                                                  dock.config
+
+        4) Lastly assign DOCK: to the directory where the configuration file and 
+           the brushes are kept. This will be either the "Dock/Interlace/Maindock/"
+           directory or the "Dock/Non-Interlace/Maindock/" directory depending on
+           if you run your workbench in interlace mode or not. The only difference
+           in the files are the size of the brushes. The interlace versions are
+           larger than the non-interlace ones. Either one will work on any screen
+           (interlaced or not). AmiDock when run from the workbench uses the DOCK:
+           assignment to find its config file and brushes. This assignment should
+           be added to your startup-sequence. AmiDock will also use the DOCK:
+           directory if run from the CLI with no argument given. The only argument
+           AmiDock takes is the path to it's config file.
+
+        5) execute AmiDock.
+
+        6) AmiDock comes pre-configured to run a variety of programs. You will
+           want to re-configure the dock to run the programs you have.
+           
+           
+Misc Stuff
+
+  In this release the brushes associated with a given dock.config file must be in
+the same directory as that dock.config file. The brush requester will allow you to
+enter a brush from a different directory, but AmiDock will not recognize the brush
+if it is not in the same directory as it's dock.config file.
+
+  AmiDock does not need to be "run", it will set itself up as a background process 
+and return control to the CLI. AmiDock can be added to your startup-sequence and it
+will allow the startup CLI to close. If you are using AmigaDOS2.0, AmiDock can be 
+placed in the wbstartup drawer, just remember to add a tool type of DONOTWAIT to
+AmiDock's icon.
+
+  AmiDock accepts 1 argument when run from the CLI. This is the path to the config
+file and brushes. ex: amidock dh0:dock/interlace/maindock - this will use the path
+"dh0:dock/interlace/maindock" as the path to the config file. If AmiDock is run with
+no arguments it will use the DOCK: assignment.
+
+  The Text button in the Add/Edit/Delete window does not work.  (yet..)
+Pressing it will not cause any change in operation, AmiDock will still use the 
+brush.
+
+  Included in this distribution should be two files called "DockImageGrid1.iff"
+and "DockImageGrid2.iff". They are non-interlaced and interlaced respectively.
+These files are IFF ILBM pictures of many pre-defined button image's and a bunch
+a blank ones that you can fill in with your own designs. To create a new brush or
+add a pre-defined one, load the DockImageGrid?.iff into a paint program (DPaint),
+draw your new brush inside one of the blank buttons or find a pre-defined you like,
+and grab it as a brush. Make sure that the edges of the brush are the edges of the
+button. Save the brush in the directory of the dock you want to use it on. If you
+come up with any interesting brushes be sure to upload them or mail them to me so
+I can include them with future releases of AmiDock.
+
+  I want to say a word of thanks to the management of Soft-Logik Publishing Corp.
+for the use of their facilities in the distribution of AmiDock.  While this is
+not in anyway a product of Soft-Logik's they have nonetheless been very supportive 
+of me while I was developing it (by giving me a day job).  A special thanks to
+Deron Kazmaier, Dan Weiss, Brad Kazmaier and  Mike Loader for their help in 
+seeing AmiDock born.
+
+  Last but not least, AmiDock is a shareware program. AmiDock is not Public 
+Domain or Freeware. AmiDock is freely re-distributable providing all the files in
+this distribution are kept intact. Please give (do not sell) AmiDock to anyone you
+like. As stated, AmiDock is a shareware program and as such I request a fee of 
+$25.00 if you use this program. 
+
+  When I receive your monetary contribution I will make you a registered user
+and send you a "real" manual  that explains in greater detail the workings of  
+AmiDock and the latest version of the program. As a registered user you will be 
+entitled to free upgrades (via on-line services) as long as AmiDock remains a 
+shareware product and a discount if (and hopefully when) AmiDock goes commercial.
+If you are registered and would like a copy of the latest version from me, just send
+a blank floppy and a SASE that can hold the floppy, and I will send you the latest 
+free of charge. I have big plans for AmiDock, but they will only be realized if the
+product gets support from the Amiga community.
+
+  Well that's about all for the readme file. A complete description of the 
+program and all it's features will be supplied in the manual which you will receive 
+when you send in your registration card (see below) and money. Please mail the 
+card and your payment (check (drawn on a US bank), money order payable to me (in
+US Funds), or cash) at the address listed below:
+
+
+                        Gary Knight
+			3200 Patterson Place Dr #307
+			St.Louis, Mo. 63129
+
+
+  I hope you find this program useful!  If you have any comments or bug 
+reports I can be reached by e-mail on:
+
+                        GENIE: Deron.K
+                        CIS: 76317,3633
+                        BIX: dkazmaier
+                        Soft-Logik BBS: Quill, or #292
+
+You can also drop me a letter at the address listed above.
+			                
+
+                	        Thank You!!!!
+
+
+PS: Here is a list of the new features/fixes in AmiDock 1.4.1:
+    (which you will receive when you register)
+        
+        
+        - added support for drop in icons under wb2.0. To add a new item just
+          drag the icon over to the dock and drop it on the dock's window and it
+          will be added using the icon for an image.
+        
+        - now it uses GetDiskObject to load the icon's imagery instead of reading
+          the file directly.
+          
+        - bug fixes involving memory not being freed under some conditions.
+        
+        - added support for using icons for bay images.
+        
+        - added support for using text for bay images (including font and color
+          control if running under wb2.0).
+        
+        - some internal re-works, code cleanup, and optimizations.
+        
+        - eliminated all need for the arp.library if running under wb2.0!
+          (and there was much rejoicing)
+          
+          * AmiDock uses the ASL file requester.
+          * AmiDock uses the ASL font requester.
+          * AmiDock uses the DOS Execute() call when running a program as a CLI
+            style process.
+        
+        - when AmiDock is the active window the WB screen title bar now has the
+          word "AmiDock" in it. (this goes for the select and edit windows also)
+        
+        - when AmiDock is launching a program it puts a message in the WB screens
+          title bar that reads "Attempting to load 'program name'..." like wb2.0.
+          
+        - the prop gadget in the Dock Item Selector window now uses the PROPNEWLOOK
+          flag for the new and improved wb2.0 look.
+          
+        - put in much more comprehensive error handling and reporting.
+        
+        - if the icon image is used, the name of the ".info" file is taken from the
+          path+appname+".info". It no longer uses the string gadget's contents
+          to get the ".info" file.
+          
+
+
+                        cut here and return with payment
+-----------------------------------------------------------------------------------
+
+
+                             USER  REGISTRATION  CARD
+
+
+        Product: AmiDock v1.3
+
+
+        Name:_____________________________________________________________
+
+        Address:__________________________________________________________
+
+        City:___________________________________ State:___________________
+
+        Country:__________________________ Postal Code:___________________
+        
+
+        Workbench version:________________________________________________
+        
+        
+        Description of Hardware:__________________________________________
+
+        __________________________________________________________________
+
+
+        Primary Use of Hardware:  ___Home   ___Business   ___Fun  ___Other
+
+	
+        Comments:_________________________________________________________
+
+        __________________________________________________________________
+
+        __________________________________________________________________
+
+        __________________________________________________________________
+
+        __________________________________________________________________
+	
+        __________________________________________________________________
